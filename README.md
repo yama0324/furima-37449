@@ -22,3 +22,69 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+# テーブル設計
+
+## users テーブル
+
+| Column             | Type   | Options                 |
+| ------------------ | ------ | ----------------------- |
+| name               | string | null: false,            |
+| email              | string | null: false,unique:true |
+
+### Association
+
+- has_many :items
+- has_many :purchased_records
+
+## items テーブル
+
+| Column           | Type       | Options                       |
+| ---------------- | ---------- | ----------------------------- |
+| name             | string     | null: false                   |
+| image            | string     | null: false                   |
+| detail           | text       | null: false                   |
+| category         | string     | null: false                   |
+| status           | string     | null: false                   |
+| delivery_charge  | string     | null: false                   |
+| delivery_area    | string     | null: false                   |
+| delivery_days    | string     | null: false                   |
+| price            | string     | null: false                   |
+
+### Association
+
+- has_one :purchased_record
+- belongs_to :user
+
+## purchased_records テーブル
+
+| Column            | Type       | Options                        |
+| ----------------- | ---------- | ------------------------------ |
+| credit_number     | string     | null: false                    |
+| effective_date    | string     | null: false                    |
+| security_number   | string     | null: false                    |
+| user              | references | null: false, foreign_key: true |
+| item              | references | null: false, foreign_key: true |
+
+### Association
+
+- belongs_to :user
+- belongs_to :item
+- has_one :delivery_record
+
+## delivery_records テーブル
+
+| Column            | Type       | Options                        |
+| ----------------- | ---------- | ------------------------------ |
+| post_code         | string     | null: false                    |
+| prefecture        | string     | null: false                    |
+| city              | string     | null: false                    |
+| address            | string     | null: false                    |
+| building_name     | string     | null: false                    |
+| phone_number      | string     | null: false                    |
+| purchased_record  | references | null: false, foreign_key: true |
+
+### Association
+
+- belongs_to :purchased_record
+
