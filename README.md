@@ -53,7 +53,7 @@ Things you may want to cover:
 | status_id           | integer     | null: false                    |
 | delivery_charge_id  | integer     | null: false                    |
 | delivery_area_id    | integer     | null: false                    |
-| delivery_days_id    | integer     | null: false                    |
+| delivery_date_id    | integer     | null: false                    |
 | price               | integer     | null: false                    |
 | user                | references  | null: false, foreign_key: true |
 
