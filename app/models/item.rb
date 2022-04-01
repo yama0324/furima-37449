@@ -13,4 +13,8 @@ class Item < ApplicationRecord
   validates :delivery_charge_id, numericality: { other_than: 1, message: "can't be blank" }
   validates :delivery_area_id, numericality: { other_than: 1, message: "can't be blank" }
   validates :delivery_date_id, numericality: { other_than: 1, message: "can't be blank" }
+  validates :name,presence: true,presence: {message: "can't be blank"}
+  validates :detail,presence: true,presence: {message: "can't be blank"}
+  validates :price,presence: true,numericality:{only_integer: true,greater_than_or_equal_to: 300, less_than_or_equal_to:9_999_999},format:{with: /\A[0-9]+\z/},presence: {message: "can't be blank"}
+  
 end
