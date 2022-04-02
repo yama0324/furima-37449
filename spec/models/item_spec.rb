@@ -10,6 +10,7 @@ RSpec.describe Item, type: :model do
       it 'image,name,detail,category_id,status_id,delivery_charge_id,delivery_area_id,delivery_date_id,priceが存在すれば登録できる' do
         expect(@item).to be_valid
       end
+      sleep 0.1
     end
 
     context '新規出品できないとき' do
