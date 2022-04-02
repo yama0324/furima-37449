@@ -46,7 +46,6 @@ RSpec.describe Item, type: :model do
       it 'priceが空では登録できない' do
         @item.price = ''
         @item.valid?
-        binding.pry
         expect(@item.errors.full_messages).to include "Price can't be blank"
       end
       it 'priceが300円以上でないと登録できない' do 
