@@ -48,16 +48,27 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include "Price can't be blank"
       end
-      it 'priceが300円以上9,999,999円以下でないと登録できない' do 
+      it 'priceが300円以上でないと登録できない' do 
         @item.price = '200'  
         @item.valid?
         expect(@item.errors.full_messages).to include ('Price must be greater than or equal to 300')
+      end
+      it 'priceが9,999,999円以下でないと登録できない' do 
+        @item.price = '10000000'  
+        @item.valid?
+        expect(@item.errors.full_messages).to include ('Price must be less than or equal to 9999999')
       end
       it 'priceが半角数字以外は登録できない' do 
         @item.price = '２００'  
         @item.valid?
         expect(@item.errors.full_messages).to include ('Price is not a number')
       end
+      it 'user情報がないと登録できない' do 
+        @item.user_id = 5  
+        @item.valid?
+        expect(@item.errors.full_messages).to include ('User must exist')
+      end
+
     end
   end
 end
