@@ -1,24 +1,26 @@
 class PurchasedRecordsController < ApplicationController
+  before_action :non_purchased_item, only:[:index,:create]
 
   def index
-  end
-
-  def new
+    @purcharsed_delivery_record = PurchasedDeliveryRecord.new
   end
 
   def create
-    @purchased_record = Purchased_record.create(purchased_record_params)
-    Delivery_record.create(delivery_record_params)
-    redirect_to root_path
+    @purchased_delivery_record = PurchasedDeliveryRecord.new(purchased_record_params)
+    if @purchased_delivery_record.valid?
+      @purchased_delivery_record.save
+      redirect_to root_path
+    else
+      render :index
+    end
   end
 
   private
     def purchased_record_params
-      params.require(:purchased_record).merge(user_id: current_user.id,item_id: @purchased_record.item_id)
+      params.require(:purchased_delivery_record).permit(:post_code,:city,:address,:building_name,:phone_number).merge(user_id: current_user.id,item_id: params[:item_id])
     end
 
-    def delivery_record_params
-      params.require(:delivery_record).permit(:post_code,:city,:address,:building_name,:phone_number).merge(purchased_record_id: @purchased_record.id)
+    def non_purchased_item
+      @item = Item.find(params[:item_id])
     end
-    
 end

@@ -1,3 +1,3 @@
 class DeliveryRecord < ApplicationRecord
-  has_one :purchased_record
+  belongs_to :purchased_record
 end
