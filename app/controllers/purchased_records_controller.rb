@@ -1,4 +1,5 @@
 class PurchasedRecordsController < ApplicationController
+  before_action :authenticate_user!
   before_action :non_purchased_item, only:[:index,:create]
 
   def index
@@ -6,9 +7,9 @@ class PurchasedRecordsController < ApplicationController
   end
 
   def create
-    @purchased_delivery_record = PurchasedDeliveryRecord.new(purchased_record_params)
-    if @purchased_delivery_record.valid?
-      @purchased_delivery_record.save
+    @purcharsed_delivery_record = PurchasedDeliveryRecord.new(purchased_record_params)
+    if @purcharsed_delivery_record.valid?
+      @purcharsed_delivery_record.save
       redirect_to root_path
     else
       render :index
@@ -22,5 +23,6 @@ class PurchasedRecordsController < ApplicationController
 
     def non_purchased_item
       @item = Item.find(params[:item_id])
+      redirect_to root_path if current_user.id == @item.purchased_record.present?
     end
 end
