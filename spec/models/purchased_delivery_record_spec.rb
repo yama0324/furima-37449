@@ -7,7 +7,7 @@ RSpec.describe PurchasedDeliveryRecord, type: :model do
 
   describe '配送先情報の保存' do
     context '配送先情報の保存ができるとき' do
-      it 'user_id,item_id,post_code,delivery_area_id,city,address,building_name,phone_numberが存在すれば登録できる' do
+      it 'user_id,item_id,post_code,delivery_area_id,city,address,building_name,phone_number,tokenが存在すれば登録できる' do
         expect(@purchased_delivery_record).to be_valid
       end
       it 'building_nameがなくても保存ができる' do
@@ -61,6 +61,11 @@ RSpec.describe PurchasedDeliveryRecord, type: :model do
         @purchased_delivery_record.phone_number = '000000000'
         @purchased_delivery_record.valid?
         expect(@purchased_delivery_record.errors.full_messages).to include("Phone number is invalid")
+      end
+      it 'tokenがないと保存ができない' do
+        @purchased_delivery_record.token = ''
+        @purchased_delivery_record.valid?
+        expect(@purchased_delivery_record.errors.full_messages).to include("Token can't be blank")
       end
     end
   end
