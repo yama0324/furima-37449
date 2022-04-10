@@ -72,3 +72,5 @@ gem 'active_hash'
 gem 'faker'
 
 gem 'payjp'
+
+gem 'dotenv-rails'
