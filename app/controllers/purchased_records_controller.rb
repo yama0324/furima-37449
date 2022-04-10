@@ -33,6 +33,6 @@ class PurchasedRecordsController < ApplicationController
 
     def non_purchased_item
       @item = Item.find(params[:item_id])
-      redirect_to root_path if current_user.id == @item.purchased_record.present?
+      redirect_to root_path if current_user.id == @item.user_id ||@item.purchased_record.present?
     end
 end
