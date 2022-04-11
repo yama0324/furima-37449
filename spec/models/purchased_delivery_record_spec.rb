@@ -20,7 +20,7 @@ RSpec.describe PurchasedDeliveryRecord, type: :model do
     end
 
     context '配送先情報の保存ができるとき' do
-      it 'user_idがないと保存ができない' do
+      it 'user_idがないと保存できない' do
         @purchased_delivery_record.user_id = nil
         @purchased_delivery_record.valid?
         expect(@purchased_delivery_record.errors.full_messages).to include("User can't be blank")
