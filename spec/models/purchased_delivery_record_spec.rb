@@ -2,9 +2,10 @@ require 'rails_helper'
 
 RSpec.describe PurchasedDeliveryRecord, type: :model do
   before do
-    @purchased_delivery_record = FactoryBot.build(:purchased_delivery_record)
-    @purchased_delivery_record.user_id = 1
-    @purchased_delivery_record.item_id = 1
+    user = FactoryBot.create(:user)
+    item = FactoryBot.create(:item)
+    @purchased_delivery_record = FactoryBot.build(:purchased_delivery_record, user_id: user.id,item_id: item.id)
+    sleep(1)
   end
 
   describe '配送先情報の保存' do
