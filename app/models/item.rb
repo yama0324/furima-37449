@@ -7,6 +7,7 @@ class Item < ApplicationRecord
   belongs_to :delivery_date
   belongs_to :user
   has_one_attached :image
+  has_one :purchased_record
 
   validates :image,presence: true,presence: {message: "can't be blank"}
   validates :name,presence: true,presence: {message: "can't be blank"}
