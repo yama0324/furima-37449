@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe PurchasedDeliveryRecord, type: :model do
   before do
     @purchased_delivery_record = FactoryBot.build(:purchased_delivery_record)
+    @purchased_delivery_record.user_id = 1
+    @purchased_delivery_record.item_id = 1
   end
 
   describe '配送先情報の保存' do
@@ -37,6 +39,11 @@ RSpec.describe PurchasedDeliveryRecord, type: :model do
         @purchased_delivery_record.valid?
         expect(@purchased_delivery_record.errors.full_messages).to include("Delivery area can't be blank")
       end
+      it 'delivery_area_idが1の時は保存ができない' do
+        @purchased_delivery_record.delivery_area_id = 1
+        @purchased_delivery_record.valid?
+        expect(@purchased_delivery_record.errors.full_messages).to include("Delivery area can't be blank")
+      end
       it 'cityがないと保存ができない' do
         @purchased_delivery_record.city = ''
         @purchased_delivery_record.valid?
@@ -57,8 +64,18 @@ RSpec.describe PurchasedDeliveryRecord, type: :model do
         @purchased_delivery_record.valid?
         expect(@purchased_delivery_record.errors.full_messages).to include("Post code is invalid")
       end
-      it 'phone_numberは10桁以上11桁以内の半角数値のみ保存可能なこと' do
+      it 'phone_numberは10桁未満の半角数値の場合は保存できないこと' do
         @purchased_delivery_record.phone_number = '000000000'
+        @purchased_delivery_record.valid?
+        expect(@purchased_delivery_record.errors.full_messages).to include("Phone number is invalid")
+      end
+      it 'phone_numberは12桁以上の半角数値の場合は保存できないこと' do
+        @purchased_delivery_record.phone_number = '000000000000'
+        @purchased_delivery_record.valid?
+        expect(@purchased_delivery_record.errors.full_messages).to include("Phone number is invalid")
+      end
+      it 'phone_numberは半角数字以外が含まれていると保存できないこと' do
+        @purchased_delivery_record.phone_number = '00000-00000'
         @purchased_delivery_record.valid?
         expect(@purchased_delivery_record.errors.full_messages).to include("Phone number is invalid")
       end
